@@ -22,6 +22,14 @@ func Run() error {
 	if err != nil {
 		return err
 	}
+	defer app.Rmq.Conn.Close()
+
+	err = app.Rmq.Publish("hi")
+	if err != nil {
+		return err
+	}
+
+	app.Rmq.Consume()
 
 	return nil
 }
